@@ -1,0 +1,31 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"mainClass": "Retirement",
+				"name": "Java",
+				"type": "java",
+				"request": "launch",
+				"stopOnEntry": true,
+				// "jdkPath": "/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/bin",
+				"cwd": "${fileDirname}",
+				"args": ["30", "2300000","6.450","64000","66"],
+				// "startupClass": "${fileBasenameNoExtension}",
+			},
+			
+		]
+	},
+	"settings": {
+		"files.autoSave": "onFocusChange",
+		"editor.renderWhitespace": "trailing",
+		"editor.cursorStyle": "block",
+		"editor.fontFamily": "Menlo, Monaco, Arial, monospace",
+		"editor.multiCursorModifier": "ctrlCmd"
+	}
+}

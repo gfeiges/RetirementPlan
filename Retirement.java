@@ -24,6 +24,7 @@ class Retirement {
         double addedsavings =0;
         double retirementage=0;
         double yearlyexpenses=0;
+        double inflation=0;
         int age=0;
 
 // testing for [args[0]] numberexception not enough params
@@ -38,6 +39,7 @@ class Retirement {
             retirementage = Double.parseDouble(args[4]);
             yearlyexpenses = Double.parseDouble(args[5]);
             age = Integer.parseInt(args[6]);
+            inflation=Double.parseDouble(args[7]);
             
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException exception) {
             alignargs();
@@ -46,7 +48,7 @@ class Retirement {
         
 
 // testing for argument order
-        if (argscount != 7) {
+        if (argscount != 8) {
             alignargs();
         }
         if (years > 60 || years < 10) {
@@ -56,9 +58,8 @@ class Retirement {
 // variable initialization
       
         int x = 0;
+        double workingsalary = 184000;
         double mutliplyer = 1 + returnrate;
-        double total = 0;
-        double retirementsalary = 0;
         DecimalFormat decimalFormat = new DecimalFormat("$ ###,###,###.00");
 
         System.out.println(ANSI_BOLD);
@@ -67,41 +68,43 @@ class Retirement {
         System.out.println(ANSI_RESET);
 
         while (x <= years) {
-            retirementsalary = startingbalance * .04;
             String tablestring = ("Age : " + (age) + ": ");
 
             if (age < retirementage) {
-                total = (startingbalance + addedsavings) * mutliplyer;
+                startingbalance = (startingbalance + addedsavings) * mutliplyer;
+                workingsalary= (workingsalary*1.04);
                 System.out.print(ANSI_GREEN + ANSI_BOLD + tablestring + decimalFormat.format(startingbalance));
-                System.out.println("\t\t Annual Income: " + decimalFormat.format(retirementsalary));
+                System.out.println("\t\t Annual Salary: " + decimalFormat.format(workingsalary));
                 System.out.print(ANSI_RESET);
             }
 
             if (age >= retirementage) {
+                yearlyexpenses= (yearlyexpenses*(1+(inflation/100)));
                 if (age >= 65 && age < 67) {
-                    total = ((startingbalance - retirementsalary-yearlyexpenses) * mutliplyer);
+                    startingbalance = ((startingbalance * mutliplyer)- yearlyexpenses);
                     System.out.print(ANSI_CYAN + ANSI_BOLD + tablestring + decimalFormat.format(startingbalance));
-                    System.out.println("  \t    " + " Income No Soc/Sav: " + decimalFormat.format(retirementsalary));
+                    System.out.println("  \t    " + " Income No Soc/Sav: " + decimalFormat.format(yearlyexpenses));
 
                 } else {
-                    total = ((startingbalance - retirementsalary-yearlyexpenses) * mutliplyer) + (12 * 3000);
+                    startingbalance = ((startingbalance * mutliplyer) -yearlyexpenses + (12 * 3000));
                     System.out.print(ANSI_RED + ANSI_BOLD + tablestring + decimalFormat.format(startingbalance));
-                    System.out.println("  \t" + "Annual Income With Soc: " + decimalFormat.format(retirementsalary));
+                    System.out.println("  \t" + "Yearly Expenses With Soc: " + decimalFormat.format(yearlyexpenses));
 
                 }
 
             }
+           
+        
             age++;
-            startingbalance = total;
             x++;
 
         }
         System.out.println(ANSI_RESET);
         System.out.println(ANSI_YELLOW + ANSI_BOLD);
-        System.out.println("Projected Terminal Value:\t " + decimalFormat.format(total));
+        System.out.println("Projected Terminal Value:\t " + decimalFormat.format(startingbalance));
 
         System.out.println();
-        System.out.println("Projected Ending Income:\t " + decimalFormat.format(retirementsalary));
+        System.out.println("Projected Ending Income:\t " + decimalFormat.format(yearlyexpenses));
         System.out.println(ANSI_RESET);
     }
 
@@ -109,8 +112,8 @@ class Retirement {
 
 // sorting arguments to align with inputs
 
-        System.out.printf("%n" + ANSI_RED + ANSI_BOLD
-                + "Proper Usage: (years>10 startingbalance return<100%% savings<=64000 retirementage>55 yearlyexpenses)%n");
+        System.out.printf("%n" + ANSI_YELLOW + ANSI_BOLD
+                + "Proper Usage: (years>10 startingbalance return<100%% savings<=64000 retirementage>55 yearlyexpenses inflation)%n");
         System.out.println(ANSI_RESET);
         System.exit(1);
     }

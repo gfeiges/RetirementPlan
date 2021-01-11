@@ -2,6 +2,10 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"name": "RetirementPlan-1",
+			"path": "../RetirementPlan-1"
 		}
 	],
 	"launch": {
